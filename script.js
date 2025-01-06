@@ -111,7 +111,42 @@ updateClock();
 
 // Ação do botão de comemorar
 document.getElementById('celebrationButton').addEventListener('click', () => {
-    message.style.display = 'block';
-    celebrationImage.style.display = 'block';
-    celebrationImage.src = 'https://media.licdn.com/dms/image/v2/D4D03AQHlO88-ekO3xg/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1682556629129?e=2147483647&v=beta&t=0XwmmuWyLwLsnxa_lim9pH8mYYEmvHun8YxHFml5h8k';
+    player.style.display = 'none';  // Esconde o quadrado vermelho
+    message.style.display = 'block';  // Exibe a imagem da comemoração
+    celebrationImage.src = 'https://media.licdn.com/dms/image/v2/D4D03AQHlO88-ekO3xg/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1682556629129?e=2147483647&v=beta&t=0XwmmuWyLwLsnxa_lim9pH8mYYEmvHun8YxHFml5h8k'; // Coloca a foto da Ana
+});
+
+// Código do joystick de arraste
+let joystick = document.getElementById('joystick');
+let joystickPad = document.getElementById('joystick-pad');
+let joystickCenter = { x: joystickPad.offsetWidth / 2, y: joystickPad.offsetHeight / 2 };
+
+let dragging = false;
+
+joystickPad.addEventListener('mousedown', (e) => {
+    dragging = true;
+});
+
+document.addEventListener('mousemove', (e) => {
+    if (!dragging) return;
+
+    let offsetX = e.clientX - joystickPad.getBoundingClientRect().left - joystickCenter.x;
+    let offsetY = e.clientY - joystickPad.getBoundingClientRect().top - joystickCenter.y;
+
+    // Limitar a movimentação do joystick
+    let distance = Math.sqrt(offsetX * offsetX + offsetY * offsetY);
+    if (distance > 40) {
+        offsetX = (offsetX / distance) * 40;
+        offsetY = (offsetY / distance) * 40;
+    }
+
+    joystickPad.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+
+    // Movendo o jogador com base no movimento do joystick
+    movePlayer();
+});
+
+document.addEventListener('mouseup', () => {
+    dragging = false;
+    joystickPad.style.transform = 'translate(0px, 0px)';
 });
