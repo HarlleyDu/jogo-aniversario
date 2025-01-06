@@ -1,7 +1,7 @@
-// Variáveis para o movimento
+// Variáveis de controle de movimento
 let player = document.getElementById('player');
-let posX = 235;
-let posY = 135;
+let posX = 250;
+let posY = 150;
 let speedX = 0;
 let speedY = 0;
 const acceleration = 1.5; // Aceleração
@@ -43,6 +43,7 @@ document.addEventListener('keyup', (event) => {
     }
 });
 
+// Função para movimentar o jogador
 function movePlayer() {
     if (moveLeft) {
         speedX -= acceleration;
@@ -57,7 +58,7 @@ function movePlayer() {
         speedY += acceleration;
     }
 
-    // Aplicando a desaceleração
+    // Aplicando desaceleração
     speedX *= friction;
     speedY *= friction;
 
@@ -65,83 +66,52 @@ function movePlayer() {
     posX += speedX;
     posY += speedY;
 
-    // Impedindo que o personagem saia da tela
+    // Impedindo que o jogador saia da tela
     if (posX < 0) posX = 0;
     if (posX > window.innerWidth - player.offsetWidth) posX = window.innerWidth - player.offsetWidth;
     if (posY < 0) posY = 0;
     if (posY > window.innerHeight - player.offsetHeight) posY = window.innerHeight - player.offsetHeight;
 
-    // Aplicando as novas posições
+    // Atualizando as posições do jogador
     player.style.left = posX + 'px';
     player.style.top = posY + 'px';
 
-    // Continuar a animação
     requestAnimationFrame(movePlayer);
 }
 
-// Iniciando a movimentação
+// Iniciando a movimentação do jogador
 movePlayer();
 
-// Função para exibir a hora
+// Relógio e comemoração
+const clock = document.getElementById('clock');
+const message = document.getElementById('message');
+const celebrationImage = document.getElementById('celebrationImage');
+const celebrationLink = document.getElementById('celebrationLink');
+
+// Função para atualizar o relógio e verificar a hora
 function updateClock() {
     const now = new Date();
-    const brazilTime = new Date(now.toLocaleString('en-US', { timeZone: 'America/Sao_Paulo' }));
-    const hours = brazilTime.getHours().toString().padStart(2, '0');
-    const minutes = brazilTime.getMinutes().toString().padStart(2, '0');
-    const seconds = brazilTime.getSeconds().toString().padStart(2, '0');
-    const clockElement = document.getElementById('clock');
-    clockElement.textContent = `${hours}:${minutes}:${seconds}`;
+    const options = { timeZone: 'America/Sao_Paulo', hour12: false };
+    const time = now.toLocaleTimeString('pt-BR', options);
+    clock.textContent = time;
+
+    if (time === '00:00:00') {
+        message.style.display = 'block';
+        celebrationImage.style.display = 'block';
+        celebrationImage.src = 'https://media.licdn.com/dms/image/v2/D4D03AQHlO88-ekO3xg/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1682556629129?e=2147483647&v=beta&t=0XwmmuWyLwLsnxa_lim9pH8mYYEmvHun8YxHFml5h8k';
+    } else {
+        message.style.display = 'none';
+        celebrationImage.style.display = 'none';
+    }
+
+    setTimeout(updateClock, 1000);
 }
 
-// Atualiza o relógio a cada segundo
-setInterval(updateClock, 1000);
+updateClock();
 
-// Evento do botão de comemoração
-document.getElementById('celebrationButton').addEventListener('click', function() {
-    // Exibir a mensagem de comemoração e a imagem permanentemente
-    const messageElement = document.getElementById('message');
-    const celebrationImage = document.getElementById('celebrationImage');
-    const celebrationLink = document.getElementById('celebrationLink');
-    
-    // Mostrar a mensagem e a imagem de comemoração
-    messageElement.style.display = 'block';
-    messageElement.innerHTML = "Harlley Mandou eu dizer, que você é linda, perfeita e feliz aniversário";
-    
-    // Substituir o quadrado vermelho pela imagem da URL
-    celebrationImage.src = "https://media.licdn.com/dms/image/v2/D4D03AQHlO88-ekO3xg/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1682556629129?e=2147483647&v=beta&t=0XwmmuWyLwLsnxa_lim9pH8mYYEmvHun8YxHFml5h8k";
-    
-    // Adicionar a URL com o link de comemoração
-    celebrationLink.innerHTML = 'Clique para visitar meu perfil no LinkedIn: <a href="https://www.linkedin.com/in/harlleyduarte/" target="_blank">Harlley Duarte</a>';
-    
-    // Substituindo o quadrado vermelho pela imagem, permanentemente
-    player.style.display = 'none'; // Esconder o quadrado vermelho
-});
-
-// Controle do Joystick para celulares
-document.getElementById('joystick-left').addEventListener('touchstart', function() {
-    moveLeft = true;
-});
-document.getElementById('joystick-left').addEventListener('touchend', function() {
-    moveLeft = false;
-});
-
-document.getElementById('joystick-right').addEventListener('touchstart', function() {
-    moveRight = true;
-});
-document.getElementById('joystick-right').addEventListener('touchend', function() {
-    moveRight = false;
-});
-
-document.getElementById('joystick-up').addEventListener('touchstart', function() {
-    moveUp = true;
-});
-document.getElementById('joystick-up').addEventListener('touchend', function() {
-    moveUp = false;
-});
-
-document.getElementById('joystick-down').addEventListener('touchstart', function() {
-    moveDown = true;
-});
-document.getElementById('joystick-down').addEventListener('touchend', function() {
-    moveDown = false;
+// Ação do botão de comemorar
+document.getElementById('celebrationButton').addEventListener('click', () => {
+    message.style.display = 'block';
+    celebrationImage.style.display = 'block';
+    celebrationImage.src = 'https://media.licdn.com/dms/image/v2/D4D03AQHlO88-ekO3xg/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1682556629129?e=2147483647&v=beta&t=0XwmmuWyLwLsnxa_lim9pH8mYYEmvHun8YxHFml5h8k';
 });
