@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,12 +7,31 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="clock"></div> <!-- Relógio exibido no topo da página -->
-    <div id="gameArea">
-        <div id="player"></div> <!-- Personagem quadrado -->
+    <!-- O fundo (quarto) -->
+    <div id="background"></div>
+    
+    <!-- A área do jogador (quadrado vermelho) -->
+    <div id="player"></div>
+
+    <!-- Relógio -->
+    <div id="clock"></div>
+    
+    <!-- Botão para ver a comemoração -->
+    <button id="celebrationButton">Comemorar 00:00 - 2025</button>
+
+    <!-- Mensagem de Aniversário e a imagem de comemoração -->
+    <div id="message">
+        <img id="celebrationImage" src="" alt="Imagem da Comemoração" />
+        <p id="celebrationLink"></p>
     </div>
 
-    <div id="birthdayMessage"></div> <!-- Espaço para a mensagem de feliz aniversário -->
+    <!-- Joystick visível apenas no celular -->
+    <div id="joystick" class="hidden">
+        <div class="joystick-button" id="joystick-left">←</div>
+        <div class="joystick-button" id="joystick-up">↑</div>
+        <div class="joystick-button" id="joystick-right">→</div>
+        <div class="joystick-button" id="joystick-down">↓</div>
+    </div>
 
     <script src="script.js"></script>
 </body>
